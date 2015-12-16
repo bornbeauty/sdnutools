@@ -1,0 +1,36 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".MainActivity">
+    <item
+        android:id="@+id/namePassword"
+        android:orderInCategory="100"
+        android:title="设置账号"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/chat"
+        android:orderInCategory="100"
+        android:title="机器人"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/grade"
+        android:orderInCategory="100"
+        android:title="计算绩点"
+        app:showAsAction="never" />
+
+    <!--<item android:id="@+id/start"-->
+        <!--android:orderInCategory="100"-->
+        <!--android:title="开始"-->
+        <!--app:showAsAction="never" />-->
+
+    <item
+        android:id="@+id/about"
+        android:orderInCategory="100"
+        android:title="关于APP"
+        app:showAsAction="never" />
+
+
+
+
+</menu>

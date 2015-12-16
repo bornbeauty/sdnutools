@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <color name="Background">#EEEEEE</color>
+
+    <color name="MyActionBarColor">#FF6699</color>
+    <color name="q">#6000FF</color>
+    <color name="w">#02FF00</color>
+    <color name="ContentLayoutNormal">@color/Background</color>
+    <color name="ContentLayoutRefreshing">#339966</color>
+    <color name="ContentLayoutFailed">@android:color/holo_red_dark</color>
+
+</resources>
