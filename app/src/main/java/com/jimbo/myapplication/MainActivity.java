@@ -12,6 +12,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -44,7 +45,7 @@ public class MainActivity extends AppCompatActivity {
     private ButtonRectangle btRefresh;
     private ButtonRectangle btLendToSDNU;
 
-
+    private NetWorkPost post;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -137,14 +138,28 @@ public class MainActivity extends AppCompatActivity {
             case R.id.namePassword:
                 builder.setTitle("设置账号");
                 builder.setView(view);
+                final EditText nameEditText = (EditText) view.findViewById(R.id.name);
+                final EditText passwordEditText = (EditText) view.findViewById(R.id.password);
+                nameEditText.setText(PrefUtils.getString(MainActivity.this,
+                        Config.SDNU_USERNAME, ""));
+                passwordEditText.setText(PrefUtils.getString(MainActivity.this,
+                        Config.SDNU_PASSWORD, ""));
                 builder.setPositiveButton("确定", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        String name = ((EditText) view.findViewById(R.id.name)).getText().toString().trim();
-                        String password = ((EditText) view.findViewById(R.id.password)).getText().toString().trim();
+                        String name = nameEditText.getText().toString().trim();
+                        String password = passwordEditText.getText().toString().trim();
                         Toast.makeText(MainActivity.this, name, Toast.LENGTH_SHORT).show();
-                        PrefUtils.putString(MainActivity.this, Config.SDNU_USERNAME, name);
-                        PrefUtils.putString(MainActivity.this, Config.SDNU_PASSWORD, password);
+                        if (((CheckBox)view.findViewById(R.id.rememberAccount)).isChecked()) {
+                            PrefUtils.putString(MainActivity.this, Config.SDNU_USERNAME, name);
+                        } else {
+                            PrefUtils.putString(MainActivity.this, Config.SDNU_USERNAME, "");
+                        }
+                        if (((CheckBox)view.findViewById(R.id.rememberPassword)).isChecked()) {
+                            PrefUtils.putString(MainActivity.this, Config.SDNU_PASSWORD, password);
+                        } else {
+                            PrefUtils.putString(MainActivity.this, Config.SDNU_PASSWORD, "");
+                        }
                         dialog.dismiss();
                     }
                 });
@@ -289,7 +304,7 @@ public class MainActivity extends AppCompatActivity {
             Toast.makeText(MainActivity.this, "请设置正确的账号密码！", Toast.LENGTH_SHORT).show();
             return;
         }
-        NetWorkPost post = new NetWorkPost(map, Config.URL, handler);
+        post = new NetWorkPost(map, Config.URL, handler);
         post.start();
     }
 
@@ -331,6 +346,7 @@ public class MainActivity extends AppCompatActivity {
         }
     });
 
+    static int count = 0;
     Handler handler = new Handler(new Handler.Callback() {
         @Override
         public boolean handleMessage(Message msg) {
@@ -338,24 +354,34 @@ public class MainActivity extends AppCompatActivity {
             String html = (String) msg.obj;
 
             if (1 == what) {
+                count = 0;
                 String message = getMessage(html);
                 if (isSuccessUp(message)) {
                     tvWifiStatus.setText("网络畅通");
                     tvWifiStatus.setTextColor(Color.BLUE);
                     tvSDNUMessage.setText("连接成功");
-                    Toast.makeText(MainActivity.this, "surf as much as your likes", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(MainActivity.this, "连接成功", Toast.LENGTH_SHORT).show();
                 } else {
                     tvWifiStatus.setText("网络不可用");
                     tvSDNUMessage.setText(message);
                 }
             } else if (Config.FAILTOLEADSDNU == what) {
                 tvSDNUMessage.setText("没有连接到sdnu或者sdnu网络异常");
-                Toast.makeText(MainActivity.this, "you should learn now", Toast.LENGTH_SHORT).show();
+                Toast.makeText(MainActivity.this, "连接失败", Toast.LENGTH_SHORT).show();
+                if (post.getCount() > 10) {
+                    Toast.makeText(MainActivity.this, "连接失败 正在重新尝试", Toast.LENGTH_SHORT).show();
+                    post.start();
+                    return true;
+                }
             } else {
+                if (post.getCount() > 10) {
+                    Toast.makeText(MainActivity.this, "连接失败 正在重新尝试", Toast.LENGTH_SHORT).show();
+                    post.start();
+                    return true;
+                }
                 tvSDNUMessage.setText("sdnu可能很忙 现在你不能Up他");
-                Toast.makeText(MainActivity.this, "you should learn now", Toast.LENGTH_SHORT).show();
+                Toast.makeText(MainActivity.this, "连接失败", Toast.LENGTH_SHORT).show();
             }
-
             return true;
         }
     });

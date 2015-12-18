@@ -30,7 +30,9 @@ public class WiFiReceiver extends BroadcastReceiver {
     WifiManager manager = null;
     NotificationManager notificationManager = null;
     Notification notification = null;
-    private boolean isConnected = false;
+    private NetWorkPost post;
+
+    private boolean isConnectting = false;
 
     @Override
     public void onReceive(Context context, Intent intent) {
@@ -68,8 +70,10 @@ public class WiFiReceiver extends BroadcastReceiver {
             case WifiManager.WIFI_STATE_ENABLED:
                 PrefUtils.putInt(context, Config.WIFI_STATUS_RECORD, WifiManager.WIFI_STATE_ENABLED);
                 String wifiName = manager.getConnectionInfo().getSSID();
-                if ("\"sdnu\"".equals(wifiName)) {
-                    new NetWorkPost(getSDNU(context), Config.URL, handler).start();
+                if ("\"sdnu\"".equals(wifiName) && !isConnectting) {
+                    post = new NetWorkPost(getSDNU(context), Config.URL, handler);
+                    post.start();
+                    isConnectting = true;
                 }
                 break;
             case WifiManager.WIFI_STATE_ENABLING:
@@ -131,12 +135,16 @@ public class WiFiReceiver extends BroadcastReceiver {
             }
         }).start();
     }
-
     Handler internetHandler = new Handler(new Handler.Callback() {
+
         @Override
         public boolean handleMessage(Message msg) {
             if (msg.what == 1) {
                 notificationManager.notify(100001, notification);
+            } else {
+                if (post.getCount() < 10) {
+                    post.start();
+                }
             }
             return true;
         }

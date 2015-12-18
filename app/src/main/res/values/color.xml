@@ -3,7 +3,8 @@
 
     <color name="Background">#EEEEEE</color>
 
-    <color name="MyActionBarColor">#FF6699</color>
+    <!-- #FF6699 粉红 -->
+    <color name="MyActionBarColor">#1E88E5</color>
     <color name="q">#6000FF</color>
     <color name="w">#02FF00</color>
     <color name="ContentLayoutNormal">@color/Background</color>
