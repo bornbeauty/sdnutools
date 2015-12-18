@@ -3,4 +3,41 @@
 
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
+
+    <!-- meau -->
+    <string name="meau_setAccPsw">设置sdnu账号</string>
+    <string name="meau_chat">与"我"聊聊</string>
+    <string name="meau_calc_grade">计算绩点</string>
+    <string name="meau_about">关于</string>
+    <string name="meau_check_new">检测更新</string>
+
+    <string name="update_title">更新说明</string>
+    <string name="update_done">更新</string>
+    <string name="update_cancel">取消</string>
+    <string name="update_latest">已经是最新版本</string>
+
+    <string name="mengmeng_done">好哒</string>
+    <string name="done">确定</string>
+    <string name="cancel">取消</string>
+
+    <string name="description_about">该APP为了让同学们更好更方便的使用SDNU网络.保证不会收集同学们的账号" +
+                        ",请放心.有任何问题请联系QQ：965735056.</string>
+
+    <string name="login_jwc">登入教务处</string>
+    <string name="null_description">输入不能为空!</string>
+    <string name="exception_description">出现错误 已经上报 我们会尽快修复</string>
+    <string name="point_set_account">未设置账号</string>
+    <string name="no_network">未知</string>
+    <string name="not_link_sdnu">尚未连接到sdnu</string>
+    <string name="point_right_account">请设置正确的账号密码！</string>
+    <string name="test_host">https://www.baidu.com</string>
+    <string name="normal_network">网络畅通</string>
+    <string name="not_network">网络不可用</string>
+    <string name="link_success">连接成功</string>
+    <string name="link_failed">没有连接到sdnu或者sdnu网络异常</string>
+    <string name="link_again">连接失败 正在重新尝试</string>
+    <string name="link_failed_all">连接失败</string>
+    <string name="link_failed_text">sdnu可能很忙 现在你不能Up他</string>
+
+
 </resources>

@@ -5,29 +5,29 @@
     <item
         android:id="@+id/namePassword"
         android:orderInCategory="100"
-        android:title="设置账号"
+        android:title="@string/meau_setAccPsw"
         app:showAsAction="never" />
 
     <item
         android:id="@+id/chat"
         android:orderInCategory="100"
-        android:title="机器人"
+        android:title="@string/meau_chat"
         app:showAsAction="never" />
     <item
         android:id="@+id/grade"
         android:orderInCategory="100"
-        android:title="计算绩点"
+        android:title="@string/meau_calc_grade"
         app:showAsAction="never" />
 
-    <!--<item android:id="@+id/start"-->
-        <!--android:orderInCategory="100"-->
-        <!--android:title="开始"-->
-        <!--app:showAsAction="never" />-->
+    <item android:id="@+id/checkNew"
+        android:orderInCategory="100"
+        android:title="@string/meau_check_new"
+        app:showAsAction="never" />
 
     <item
         android:id="@+id/about"
         android:orderInCategory="100"
-        android:title="关于APP"
+        android:title="@string/meau_about"
         app:showAsAction="never" />
 
 

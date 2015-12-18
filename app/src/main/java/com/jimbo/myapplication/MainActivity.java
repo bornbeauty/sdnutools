@@ -2,6 +2,7 @@ package com.jimbo.myapplication;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.res.Resources;
 import android.graphics.Color;
 import android.net.wifi.WifiManager;
 import android.os.Bundle;
@@ -18,7 +19,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.gc.materialdesign.views.ButtonRectangle;
+import com.gc.materialdesign.widgets.SnackBar;
 import com.jimbo.myapplication.utils.PrefUtils;
+import com.pgyersdk.crash.PgyCrashManager;
 import com.pgyersdk.javabean.AppBean;
 import com.pgyersdk.update.PgyUpdateManager;
 import com.pgyersdk.update.UpdateManagerListener;
@@ -36,33 +39,21 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class MainActivity extends AppCompatActivity {
-
     private TextView tvSDNUMessage;
     private TextView tvWifiStatus;
-    private ButtonRectangle btRefreshWifiStatus;
     private TextView tvWifiName;
     private TextView tvUserName;
-    private ButtonRectangle btRefresh;
-    private ButtonRectangle btLendToSDNU;
-
+    //联网class
     private NetWorkPost post;
+
+    Resources resources = getResources();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-//        setContentView(R.layout.activity_newmain);
-//
-//        final ProgressLayout p = (ProgressLayout) findViewById(R.id.progressLayout);
-//        p.start();
-//        p.setCurrentProgress(10);
-//        p.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                p.stop();
-//            }
-//        });
 
-        //PgyUpdateManager.register(this);
+        PgyUpdateManager.register(this);
 
         //初始化控件
         initView();
@@ -70,23 +61,23 @@ public class MainActivity extends AppCompatActivity {
         showMessage();
         //连接
         internet();
-//        /upNew();
+
+        upNew();
     }
 
     private void upNew() {
         PgyUpdateManager.register(MainActivity.this,
                 new UpdateManagerListener() {
-
                     @Override
                     public void onUpdateAvailable(final String result) {
-
                         // 将新版本信息封装到AppBean中
                         final AppBean appBean = getAppBeanFromString(result);
                         new AlertDialog.Builder(MainActivity.this)
-                                .setTitle("更新")
-                                .setMessage("-")
-                                .setNegativeButton(
-                                        "确定",
+                                .setTitle(getResources().getString(R.string.update_title))
+                                .setMessage(appBean.getReleaseNote()+"\n"+"版本号:"
+                                    +appBean.getVersionCode()+"\n版本名称:"+appBean.getVersionName())
+                                .setPositiveButton(
+                                        "更新",
                                         new DialogInterface.OnClickListener() {
 
                                             @Override
@@ -97,12 +88,22 @@ public class MainActivity extends AppCompatActivity {
                                                         MainActivity.this,
                                                         appBean.getDownloadURL());
                                             }
-                                        }).create().show();
+                                        })
+                                .setNegativeButton(getResources().getString(R.string.update_cancel),
+                                        new DialogInterface.OnClickListener() {
+                                            @Override
+                                            public void onClick(DialogInterface dialog, int which) {
+                                                dialog.dismiss();
+                                            }
+                                        })
+                                .create().show();
                     }
 
                     @Override
                     public void onNoUpdateAvailable() {
-                        MainActivity.this.finish();
+                        SnackBar bar = new SnackBar(MainActivity.this,
+                                resources.getString(R.string.update_latest));
+                        bar.show();
                     }
                 });
     }
@@ -111,8 +112,7 @@ public class MainActivity extends AppCompatActivity {
         Document doc = Jsoup.parse(html);
         Elements div = doc.getElementsByClass("b_cernet");
         Elements trs = div.get(0).getElementsByTag("tr");
-        String message = trs.get(1).text();
-        return message;
+        return trs.get(1).text();
     }
 
     private boolean isSuccessUp(String message) {
@@ -133,10 +133,10 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        final View view = getLayoutInflater().inflate(R.layout.test, null);
         switch (item.getItemId()) {
             case R.id.namePassword:
-                builder.setTitle("设置账号");
+                final View view = getLayoutInflater().inflate(R.layout.test, null);
+                builder.setTitle(resources.getString(R.string.meau_setAccPsw));
                 builder.setView(view);
                 final EditText nameEditText = (EditText) view.findViewById(R.id.name);
                 final EditText passwordEditText = (EditText) view.findViewById(R.id.password);
@@ -144,26 +144,27 @@ public class MainActivity extends AppCompatActivity {
                         Config.SDNU_USERNAME, ""));
                 passwordEditText.setText(PrefUtils.getString(MainActivity.this,
                         Config.SDNU_PASSWORD, ""));
-                builder.setPositiveButton("确定", new DialogInterface.OnClickListener() {
+                builder.setPositiveButton(getResources().getString(R.string.done), new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         String name = nameEditText.getText().toString().trim();
                         String password = passwordEditText.getText().toString().trim();
                         Toast.makeText(MainActivity.this, name, Toast.LENGTH_SHORT).show();
-                        if (((CheckBox)view.findViewById(R.id.rememberAccount)).isChecked()) {
+                        if (((CheckBox) view.findViewById(R.id.rememberAccount)).isChecked()) {
                             PrefUtils.putString(MainActivity.this, Config.SDNU_USERNAME, name);
                         } else {
                             PrefUtils.putString(MainActivity.this, Config.SDNU_USERNAME, "");
                         }
-                        if (((CheckBox)view.findViewById(R.id.rememberPassword)).isChecked()) {
+                        if (((CheckBox) view.findViewById(R.id.rememberPassword)).isChecked()) {
                             PrefUtils.putString(MainActivity.this, Config.SDNU_PASSWORD, password);
                         } else {
                             PrefUtils.putString(MainActivity.this, Config.SDNU_PASSWORD, "");
                         }
+                        showMessage();
                         dialog.dismiss();
                     }
                 });
-                builder.setNegativeButton("取消", new DialogInterface.OnClickListener() {
+                builder.setNegativeButton(getResources().getString(R.string.cancel), new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         dialog.dismiss();
@@ -172,10 +173,9 @@ public class MainActivity extends AppCompatActivity {
                 builder.create().show();
                 break;
             case R.id.about:
-                builder.setTitle("关于");
-                builder.setMessage("该APP为了让同学们更好更方便的使用SDNU网络。保证不会收集同学们的账号，请放心。" +
-                        "有任何问题请联系QQ：965735056。");
-                builder.setPositiveButton("好哒", new DialogInterface.OnClickListener() {
+                builder.setTitle(resources.getString(R.string.meau_about));
+                builder.setMessage(resources.getString(R.string.description_about));
+                builder.setPositiveButton(resources.getString(R.string.mengmeng_done), new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         dialog.dismiss();
@@ -190,32 +190,49 @@ public class MainActivity extends AppCompatActivity {
             case R.id.grade:
                 AlertDialog.Builder builderr = new AlertDialog.Builder(this);
                 final View vieww = getLayoutInflater().inflate(R.layout.test, null);
-                builderr.setTitle("登入教务处");
+                builderr.setTitle(resources.getString(R.string.login_jwc));
                 builderr.setView(vieww);
-                System.out.println("1");
-                builderr.setPositiveButton("确定", new DialogInterface.OnClickListener() {
+                final EditText nameEditText2 = (EditText) vieww.findViewById(R.id.name);
+                final EditText passwordEditText2 = (EditText) vieww.findViewById(R.id.password);
+                //恢复上一次的账号密码
+                nameEditText2.setText(PrefUtils.getString(MainActivity.this,
+                        Config.SDNU_JWC_STUID, ""));
+                passwordEditText2.setText(PrefUtils.getString(MainActivity.this,
+                        Config.SDNU_JWC_PSW, ""));
+                builderr.setPositiveButton(resources.getString(R.string.done), new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-
                         try {
-                            String name = ((EditText) vieww.findViewById(R.id.name)).getText().toString().trim();
-                            String password = ((EditText) vieww.findViewById(R.id.password)).getText().toString().trim();
+                            String name = nameEditText2.getText().toString().trim();
+                            String password = passwordEditText2.getText().toString().trim();
+                            if (((CheckBox)vieww.findViewById(R.id.rememberAccount)).isChecked()) {
+                                PrefUtils.putString(MainActivity.this, Config.SDNU_JWC_STUID, name);
+                            } else {
+                                PrefUtils.putString(MainActivity.this, Config.SDNU_JWC_STUID, "");
+                            }
+                            if (((CheckBox)vieww.findViewById(R.id.rememberPassword)).isChecked()) {
+                                PrefUtils.putString(MainActivity.this, Config.SDNU_JWC_PSW, password);
+                            } else {
+                                PrefUtils.putString(MainActivity.this, Config.SDNU_JWC_PSW, "");
+                            }
                             Intent in = new Intent(MainActivity.this, GradeActivity.class);
                             in.putExtra("name", name);
                             in.putExtra("password", password);
                             MainActivity.this.startActivity(in);
                         } catch (NullPointerException e) {
-                            Toast.makeText(MainActivity.this, "输入不能为空", Toast.LENGTH_SHORT).show();
+                            new SnackBar(MainActivity.this,
+                                    resources.getString(R.string.null_description)).show();
                             return;
                         } catch (Exception e) {
-                            Toast.makeText(MainActivity.this, "这里", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(MainActivity.this, resources.getString
+                                    (R.string.exception_description), Toast.LENGTH_SHORT).show();
+                            PgyCrashManager.reportCaughtException(MainActivity.this, e);
                             return;
                         }
-
                         dialog.dismiss();
                     }
                 });
-                builderr.setNegativeButton("取消", new DialogInterface.OnClickListener() {
+                builderr.setNegativeButton(resources.getString(R.string.cancel), new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         dialog.dismiss();
@@ -223,8 +240,10 @@ public class MainActivity extends AppCompatActivity {
                 });
                 builderr.create().show();
                 break;
-            //case R.id.start:
-                //startActivity(new Intent(this, StartActivity.class));
+
+            case R.id.checkNew:
+                upNew();
+                break;
             default:
                 return false;
         }
@@ -253,7 +272,7 @@ public class MainActivity extends AppCompatActivity {
             return userName;
         } else {
             tvUserName.setTextColor(Color.RED);
-            return "未设置账号";
+            return resources.getString(R.string.point_set_account);
         }
     }
 
@@ -268,7 +287,7 @@ public class MainActivity extends AppCompatActivity {
         tvWifiStatus = (TextView) findViewById(R.id.wifiStatus);
         tvSDNUMessage = (TextView) findViewById(R.id.sdnuMessage);
 
-        btRefresh = (ButtonRectangle) findViewById(R.id.refresh);
+        ButtonRectangle btRefresh = (ButtonRectangle) findViewById(R.id.refresh);
         btRefresh.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -276,7 +295,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        btRefreshWifiStatus = (ButtonRectangle) findViewById(R.id.refreshWiFiStatus);
+        ButtonRectangle btRefreshWifiStatus = (ButtonRectangle) findViewById(R.id.refreshWiFiStatus);
         btRefreshWifiStatus.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -284,15 +303,15 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        btLendToSDNU = (ButtonRectangle) findViewById(R.id.lendToSDNU);
+        ButtonRectangle btLendToSDNU = (ButtonRectangle) findViewById(R.id.lendToSDNU);
         btLendToSDNU.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (getWifiName().equals(Config.WIFI_NAME)) {
                     lendToSDNU();
                 } else {
-                    tvSDNUMessage.setText("未知");
-                    Toast.makeText(MainActivity.this, "尚未连接到sdnu", Toast.LENGTH_SHORT).show();
+                    tvSDNUMessage.setText(R.string.no_network);
+                    Toast.makeText(MainActivity.this, R.string.not_link_sdnu, Toast.LENGTH_SHORT).show();
                 }
             }
         });
@@ -301,7 +320,7 @@ public class MainActivity extends AppCompatActivity {
     private void lendToSDNU() {
         Map<String, String> map = getSDNU();
         if (null == map) {
-            Toast.makeText(MainActivity.this, "请设置正确的账号密码！", Toast.LENGTH_SHORT).show();
+            Toast.makeText(MainActivity.this, R.string.point_right_account, Toast.LENGTH_SHORT).show();
             return;
         }
         post = new NetWorkPost(map, Config.URL, handler);
@@ -316,7 +335,7 @@ public class MainActivity extends AppCompatActivity {
                 try {
                     HttpClient client = new DefaultHttpClient();
                     client.getParams().setParameter(CoreConnectionPNames.CONNECTION_TIMEOUT, 2000);
-                    HttpGet get = new HttpGet("https://www.baidu.com");
+                    HttpGet get = new HttpGet(getString(R.string.test_host));
                     HttpResponse response = client.execute(get);
                     if (200 == response.getStatusLine().getStatusCode()) {
                         message.what = Config.SUCCESSTOLEADSDNU;
@@ -337,10 +356,10 @@ public class MainActivity extends AppCompatActivity {
         public boolean handleMessage(Message msg) {
             if (msg.what == 1) {
                 tvWifiStatus.setTextColor(Color.BLUE);
-                tvWifiStatus.setText("网络畅通");
+                tvWifiStatus.setText(R.string.normal_network);
             } else {
                 tvWifiStatus.setTextColor(Color.RED);
-                tvWifiStatus.setText("网络不可用");
+                tvWifiStatus.setText(R.string.not_network);
             }
             return true;
         }
@@ -357,30 +376,33 @@ public class MainActivity extends AppCompatActivity {
                 count = 0;
                 String message = getMessage(html);
                 if (isSuccessUp(message)) {
-                    tvWifiStatus.setText("网络畅通");
+                    tvWifiStatus.setText(R.string.normal_network);
                     tvWifiStatus.setTextColor(Color.BLUE);
-                    tvSDNUMessage.setText("连接成功");
-                    Toast.makeText(MainActivity.this, "连接成功", Toast.LENGTH_SHORT).show();
+                    tvSDNUMessage.setText(R.string.link_success);
+                    new SnackBar(MainActivity.this,
+                            getResources().getString(R.string.link_success)).show();
                 } else {
-                    tvWifiStatus.setText("网络不可用");
+                    tvWifiStatus.setText(R.string.not_network);
                     tvSDNUMessage.setText(message);
                 }
             } else if (Config.FAILTOLEADSDNU == what) {
-                tvSDNUMessage.setText("没有连接到sdnu或者sdnu网络异常");
-                Toast.makeText(MainActivity.this, "连接失败", Toast.LENGTH_SHORT).show();
-                if (post.getCount() > 10) {
-                    Toast.makeText(MainActivity.this, "连接失败 正在重新尝试", Toast.LENGTH_SHORT).show();
+                tvSDNUMessage.setText(R.string.link_failed);
+                Toast.makeText(MainActivity.this, R.string.link_failed_all, Toast.LENGTH_SHORT).show();
+                if (post.getCount() < 10) {
+                    count++;
+                    Toast.makeText(MainActivity.this, R.string.link_again, Toast.LENGTH_SHORT).show();
                     post.start();
                     return true;
                 }
             } else {
-                if (post.getCount() > 10) {
-                    Toast.makeText(MainActivity.this, "连接失败 正在重新尝试", Toast.LENGTH_SHORT).show();
+                if (post.getCount() < 10) {
+                    count++;
+                    Toast.makeText(MainActivity.this, R.string.link_again, Toast.LENGTH_SHORT).show();
                     post.start();
                     return true;
                 }
-                tvSDNUMessage.setText("sdnu可能很忙 现在你不能Up他");
-                Toast.makeText(MainActivity.this, "连接失败", Toast.LENGTH_SHORT).show();
+                tvSDNUMessage.setText(R.string.link_failed_text);
+                Toast.makeText(MainActivity.this, R.string.link_failed_all, Toast.LENGTH_SHORT).show();
             }
             return true;
         }
