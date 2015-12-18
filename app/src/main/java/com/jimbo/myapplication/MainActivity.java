@@ -46,7 +46,9 @@ public class MainActivity extends AppCompatActivity {
     //联网class
     private NetWorkPost post;
 
-    Resources resources = getResources();
+    private int id = R.id.this_grade;
+
+    Resources resources;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,7 +56,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         PgyUpdateManager.register(this);
-
+        resources = getResources();
         //初始化控件
         initView();
         //显示信息
@@ -132,6 +134,7 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
+
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         switch (item.getItemId()) {
             case R.id.namePassword:
@@ -184,10 +187,13 @@ public class MainActivity extends AppCompatActivity {
                 builder.create().show();
                 break;
 
-            case R.id.chat:
-                startActivity(new Intent(MainActivity.this, RootChatActivity.class));
-                break;
+//            case R.id.chat:
+//                startActivity(new Intent(MainActivity.this, RootChatActivity.class));
+//                break;
             case R.id.grade:
+                id = R.id.grade;
+            case R.id.this_grade:
+                //id = R.id.this_grade;
                 AlertDialog.Builder builderr = new AlertDialog.Builder(this);
                 final View vieww = getLayoutInflater().inflate(R.layout.test, null);
                 builderr.setTitle(resources.getString(R.string.login_jwc));
@@ -215,10 +221,7 @@ public class MainActivity extends AppCompatActivity {
                             } else {
                                 PrefUtils.putString(MainActivity.this, Config.SDNU_JWC_PSW, "");
                             }
-                            Intent in = new Intent(MainActivity.this, GradeActivity.class);
-                            in.putExtra("name", name);
-                            in.putExtra("password", password);
-                            MainActivity.this.startActivity(in);
+                            startAct(name, password);
                         } catch (NullPointerException e) {
                             new SnackBar(MainActivity.this,
                                     resources.getString(R.string.null_description)).show();
@@ -226,7 +229,8 @@ public class MainActivity extends AppCompatActivity {
                         } catch (Exception e) {
                             Toast.makeText(MainActivity.this, resources.getString
                                     (R.string.exception_description), Toast.LENGTH_SHORT).show();
-                            PgyCrashManager.reportCaughtException(MainActivity.this, e);
+                            //PgyCrashManager.reportCaughtException(MainActivity.this, e);
+                            e.printStackTrace();
                             return;
                         }
                         dialog.dismiss();
@@ -244,11 +248,27 @@ public class MainActivity extends AppCompatActivity {
             case R.id.checkNew:
                 upNew();
                 break;
+
             default:
                 return false;
         }
 
         return true;
+    }
+
+    private void startAct(String name, String password) {
+        Intent in = new Intent();
+        if (id == R.id.grade) {
+            in.setClass(MainActivity.this, GradeActivity.class);
+            Toast.makeText(MainActivity.this, "绩点", Toast.LENGTH_SHORT).show();
+        } else {
+            in.setClass(MainActivity.this, ThisGradeActivity.class);
+            Toast.makeText(MainActivity.this, "本学期成绩", Toast.LENGTH_SHORT).show();
+        }
+        id = R.id.this_grade;
+        in.putExtra("name", name);
+        in.putExtra("password", password);
+        MainActivity.this.startActivity(in);
     }
 
     private String getWifiName() {

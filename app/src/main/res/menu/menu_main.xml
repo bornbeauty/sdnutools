@@ -8,15 +8,21 @@
         android:title="@string/meau_setAccPsw"
         app:showAsAction="never" />
 
-    <item
-        android:id="@+id/chat"
-        android:orderInCategory="100"
-        android:title="@string/meau_chat"
-        app:showAsAction="never" />
+    <!--<item-->
+        <!--android:id="@+id/chat"-->
+        <!--android:orderInCategory="100"-->
+        <!--android:title="@string/meau_chat"-->
+        <!--app:showAsAction="never" />-->
+
     <item
         android:id="@+id/grade"
         android:orderInCategory="100"
         android:title="@string/meau_calc_grade"
+        app:showAsAction="never" />
+
+    <item android:id="@+id/this_grade"
+        android:orderInCategory="100"
+        android:title="@string/this_grade"
         app:showAsAction="never" />
 
     <item android:id="@+id/checkNew"

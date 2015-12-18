@@ -6,6 +6,9 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v7.app.AlertDialog;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
+import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -34,15 +37,14 @@ import java.util.List;
  *
  * Created by Administrator on 2015/9/23.
  */
-public class GradeActivity extends Activity {
+public class GradeActivity extends AppCompatActivity {
     TextView textView = null;
 
     private String html = "";
 
     private String text = "";
 
-
-
+    private Toolbar toolbar;
 
     private String content = "";
 
@@ -59,7 +61,18 @@ public class GradeActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_grade);
+
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
         textView = (TextView) findViewById(R.id.text);
+
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onBackPressed();
+            }
+        });
 
         httpClient.getParams().setParameter(ClientPNames.COOKIE_POLICY,
                 CookiePolicy.BEST_MATCH);

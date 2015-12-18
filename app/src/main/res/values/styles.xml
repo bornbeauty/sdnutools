@@ -12,4 +12,7 @@
         <item name="android:background">@color/MyActionBarColor</item>
         <item name="background">@color/MyActionBarColor</item>
     </style>
+
+
+
 </resources>
