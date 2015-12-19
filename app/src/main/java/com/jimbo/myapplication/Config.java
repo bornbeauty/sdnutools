@@ -32,4 +32,7 @@ public class Config {
 
     public static final String SDNU_WIFI_ACCOUNT = "SDNU_WIFI_ACCOUNT";
     public static final String SDNU_WIFI_PASSWORD = "SDNU_WIFI_PASSWORD";
+
+    public static final String HELP_PAGE
+            = "http://bornbeauty.github.io/2015/12/01/android-CropImageView.html";
 }

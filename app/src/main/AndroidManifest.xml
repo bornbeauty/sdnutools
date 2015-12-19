@@ -41,6 +41,8 @@
             android:theme="@style/Theme.AppCompat.Light.NoActionBar"/>
         <activity android:name=".StartActivity" />
         <activity android:name=".ThisGradeActivity" />
+        <activity android:name=".HelpActivity"
+            android:theme="@style/toolBarActivityTheme" />
         <!-- 可选<activity android:name="com.pgyersdk.activity.FeedbackActivity"/>-->
 
 

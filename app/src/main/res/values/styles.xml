@@ -13,6 +13,18 @@
         <item name="background">@color/MyActionBarColor</item>
     </style>
 
+    <style name="toolBarActivityTheme" parent="Theme.AppCompat.Light.NoActionBar">
+
+        <!--<item name="android:colorPrimary">@color/MyActionBarColor</item>-->
+        <!--<item name="android:colorPrimaryDark">@color/MyActionBarColor</item>-->
+        <!--<item name="android:colorAccent">@color/MyActionBarColor</item>-->
+
+        <item name="colorPrimary">@color/MyActionBarColor</item>
+        <item name="colorPrimaryDark">@color/MyActionBarColor</item>
+        <item name="colorAccent">@android:color/white</item>
+
+    </style>
+
 
 
 </resources>

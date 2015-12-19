@@ -8,6 +8,7 @@ import android.net.wifi.WifiManager;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.renderscript.ScriptIntrinsicYuvToRGB;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
@@ -20,8 +21,8 @@ import android.widget.Toast;
 
 import com.gc.materialdesign.views.ButtonRectangle;
 import com.gc.materialdesign.widgets.SnackBar;
+import com.jimbo.myapplication.utils.NetWorkPost;
 import com.jimbo.myapplication.utils.PrefUtils;
-import com.pgyersdk.crash.PgyCrashManager;
 import com.pgyersdk.javabean.AppBean;
 import com.pgyersdk.update.PgyUpdateManager;
 import com.pgyersdk.update.UpdateManagerListener;
@@ -247,6 +248,10 @@ public class MainActivity extends AppCompatActivity {
 
             case R.id.checkNew:
                 upNew();
+                break;
+
+            case R.id.help:
+                startActivity(new Intent(MainActivity.this, HelpActivity.class));
                 break;
 
             default:

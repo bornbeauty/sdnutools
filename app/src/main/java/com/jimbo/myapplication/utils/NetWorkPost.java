@@ -1,7 +1,9 @@
-package com.jimbo.myapplication;
+package com.jimbo.myapplication.utils;
 
 import android.os.Handler;
 import android.os.Message;
+
+import com.jimbo.myapplication.Config;
 
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;

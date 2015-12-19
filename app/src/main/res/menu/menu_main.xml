@@ -25,6 +25,11 @@
         android:title="@string/this_grade"
         app:showAsAction="never" />
 
+    <item android:id="@+id/help"
+        android:orderInCategory="100"
+        android:title="@string/help_page"
+        app:showAsAction="never" />
+
     <item android:id="@+id/checkNew"
         android:orderInCategory="100"
         android:title="@string/meau_check_new"

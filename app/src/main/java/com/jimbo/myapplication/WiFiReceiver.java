@@ -10,6 +10,7 @@ import android.net.wifi.WifiManager;
 import android.os.Handler;
 import android.os.Message;
 
+import com.jimbo.myapplication.utils.NetWorkPost;
 import com.jimbo.myapplication.utils.PrefUtils;
 
 import org.apache.http.HttpResponse;

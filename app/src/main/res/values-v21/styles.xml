@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="toolBarActivityTheme" parent="Theme.AppCompat.Light.NoActionBar">
+
+        <item name="android:colorPrimary">@color/MyActionBarColor</item>
+        <item name="android:colorPrimaryDark">@color/MyActionBarColor</item>
+        <item name="android:colorAccent">@color/MyActionBarColor</item>
+
+        <!--<item name="colorPrimary">@color/MyActionBarColor</item>-->
+        <!--<item name="colorPrimaryDark">@color/MyActionBarColor</item>-->
+        <!--<item name="colorAccent">@color/MyActionBarColor</item>-->
+
+    </style>
+</resources>

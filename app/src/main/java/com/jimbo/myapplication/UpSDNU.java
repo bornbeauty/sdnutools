@@ -12,6 +12,6 @@ public class UpSDNU extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
-        //PgyCrashManager.register(this);
+        PgyCrashManager.register(this);
     }
 }
