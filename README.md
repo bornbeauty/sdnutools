@@ -1,14 +1,18 @@
 
 >upsdnu使用说明
+
 任何意见以及建议都可以反馈 在博客下面留言即可
 
 >BUG集合：
+
 1.alpha_2.1 2016年1月6日16:46:29：(已经处理)
 java.lang.StringIndexOutOfBoundsException: length=0; regionStart=1; regionLength=-2
 at java.lang.String.startEndAndLength(String.java:504)
 at java.lang.String.substring(String.java:1333)
 at com.jimbo.myapplication.MainActivity.getWifiName(MainActivity.java:315)
 可能是WIFI的名字过长溢出了
+
+
 2.alpha_2.0 2016年1月6日16:56:12: (已经处理)
 at android.view.ViewRootImpl.setView(ViewRootImpl.java:677)
 at android.view.WindowManagerGlobal.addView(WindowManagerGlobal.java:248)
