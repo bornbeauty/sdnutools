@@ -11,9 +11,17 @@ import com.jimbo.myapplication.utils.HttpPostUtils;
  * @author jimbo zhongjinbao1994@gmail.com
  * @since 2016/4/10 15:39
  */
-public class ConnectToNetImp implements ConnectToNet {
+public class ConnectToNetImp implements IConnectToNet {
+    private HttpPostUtils httpPostUtils = null;
+
     @Override
     public void connectToNet(Map<String, String> params, String url, Handler mHandler) {
-        new HttpPostUtils(params, url, mHandler).start();
+        httpPostUtils = new HttpPostUtils(params, url, mHandler);
+        httpPostUtils.start();
     }
+
+    public void tryAgain() {
+        httpPostUtils.tryAgain();
+    }
+
 }
