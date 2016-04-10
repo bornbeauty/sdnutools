@@ -1,4 +1,4 @@
-package com.jimbo.myapplication.view.widget;
+package com.jimbo.myapplication.widget;
 
 import android.app.Notification;
 import android.app.NotificationManager;
@@ -146,9 +146,9 @@ public class WiFiReceiver extends BroadcastReceiver {
             if (msg.what == 1) {
                 notificationManager.notify(100001, notification);
             } else {
-                if (post.getCount() < 10) {
-                    post.start();
-                }
+//                if (post.getCount() < 10) {
+//                    post.start();
+//                }
             }
             return true;
         }

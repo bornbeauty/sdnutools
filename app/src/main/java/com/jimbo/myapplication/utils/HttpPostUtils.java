@@ -38,6 +38,8 @@ public class HttpPostUtils {
     private String url = "";
     private Handler handler;
 
+    private Thread myThread;
+
     public HttpPostUtils(Map<String, String> params, String url, Handler handler) {
         this.params = params;
         this.url = url;
@@ -53,15 +55,20 @@ public class HttpPostUtils {
 
         if (isOnlyOnceCalled && !isFirstCalled) {
             throw new RuntimeException("function start() of " +
-                    "HttpPostUtils can be only called one time");
+                    "com.jimbo.myapplication.utils.HttpPostUtils can be only called one time");
         }
         isFirstCalled = false;
-        new Thread(new Runnable() {
+        myThread = new Thread(new Runnable() {
             @Override
             public void run() {
                 startNetWork();
             }
-        }).start();
+        });
+        myThread.start();
+    }
+
+    public void tryAgain() {
+        myThread.run();
     }
 
     //定义网络请求

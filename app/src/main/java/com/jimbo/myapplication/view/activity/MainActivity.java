@@ -396,19 +396,19 @@ public class MainActivity extends AppCompatActivity {
             } else if (Config.FAILTOLEADSDNU == what) {
                 tvSDNUMessage.setText(R.string.link_failed);
                 Toast.makeText(MainActivity.this, R.string.link_failed_all, Toast.LENGTH_SHORT).show();
-                if (post.getCount() < 10) {
-                    count++;
-                    Toast.makeText(MainActivity.this, R.string.link_again, Toast.LENGTH_SHORT).show();
-                    post.start();
-                    return true;
-                }
+//                if (post.getCount() < 10) {
+//                    count++;
+//                    Toast.makeText(MainActivity.this, R.string.link_again, Toast.LENGTH_SHORT).show();
+//                    post.start();
+//                    return true;
+//                }
             } else {
-                if (post.getCount() < 10) {
-                    count++;
-                    Toast.makeText(MainActivity.this, R.string.link_again, Toast.LENGTH_SHORT).show();
-                    post.start();
-                    return true;
-                }
+//                if (post.getCount() < 10) {
+//                    count++;
+//                    Toast.makeText(MainActivity.this, R.string.link_again, Toast.LENGTH_SHORT).show();
+//                    post.start();
+//                    return true;
+//                }
                 tvSDNUMessage.setText(R.string.link_failed_text);
                 Toast.makeText(MainActivity.this, R.string.link_failed_all, Toast.LENGTH_SHORT).show();
             }
