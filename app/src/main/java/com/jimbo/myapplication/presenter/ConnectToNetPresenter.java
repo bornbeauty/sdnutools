@@ -37,6 +37,7 @@ public class ConnectToNetPresenter {
                 count++;
                 if (msg.what == Config.FAILTOLEADSDNU && count < 10) {
                     connectToNetImp.tryAgain();
+                    connectToNetView.trying();
                 } else {
                     connectToNetView.failed();
                 }

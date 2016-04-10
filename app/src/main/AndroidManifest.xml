@@ -25,7 +25,7 @@
         android:icon="@mipmap/sdnu"
         android:label="@string/app_name"
         android:theme="@style/AppTheme">
-
+<!--
         <activity
             android:name=".view.activity.MainActivity"
             android:label="@string/app_name"
@@ -36,22 +36,28 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".GradeActivity"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar"/>
-        <activity android:name=".view.activity.HelpActivity"
-            android:theme="@style/toolBarActivityTheme" />
-        <!-- 可选<activity android:name="com.pgyersdk.activity.FeedbackActivity"/>-->
-
+-->
+        <activity
+            android:name=".view.activity.ConnectActivity"
+            android:label="@string/app_name"
+            android:launchMode="singleTask">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
 
         <receiver android:name=".widget.WiFiReceiver">
             <intent-filter>
                 <action android:name="android.net.wifi.STATE_CHANGE" />
             </intent-filter>
         </receiver>
+
         <!-- 必选-->
         <meta-data
             android:name="PGYER_APPID"
             android:value="3b8f98823fc815dca9839e7f38e6f514" >
         </meta-data>
+
     </application>
 </manifest>

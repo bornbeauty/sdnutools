@@ -1,6 +1,7 @@
 package com.jimbo.myapplication.view.activity;
 
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.res.Resources;
 import android.graphics.Color;
 import android.net.wifi.WifiManager;
@@ -12,6 +13,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.CheckBox;
+import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -133,11 +136,11 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        /*
+
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         switch (item.getItemId()) {
             case R.id.namePassword:
-                final View view = getLayoutInflater().inflate(R.layout.test, null);
+                final View view = getLayoutInflater().inflate(R.layout.edittext_name_password, null);
                 builder.setTitle(resources.getString(R.string.meau_setAccPsw));
                 builder.setView(view);
                 final EditText nameEditText = (EditText) view.findViewById(R.id.name);
@@ -190,7 +193,7 @@ public class MainActivity extends AppCompatActivity {
             case R.id.this_grade:
                 //id = R.id.this_grade;
                 AlertDialog.Builder builderr = new AlertDialog.Builder(this);
-                final View vieww = getLayoutInflater().inflate(R.layout.test, null);
+                final View vieww = getLayoutInflater().inflate(R.layout.edittext_name_password, null);
                 builderr.setTitle(resources.getString(R.string.login_jwc));
                 builderr.setView(vieww);
                 final EditText nameEditText2 = (EditText) vieww.findViewById(R.id.name);
@@ -251,7 +254,7 @@ public class MainActivity extends AppCompatActivity {
             default:
                 return false;
         }
-*/
+
         return true;
     }
 

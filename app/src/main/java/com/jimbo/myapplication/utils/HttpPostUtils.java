@@ -31,14 +31,10 @@ import java.util.Map;
  */
 public class HttpPostUtils {
 
-    private boolean isFirstCalled = true;
-    private boolean isOnlyOnceCalled = true;
-
+    static int i = 0;
     private Map<String, String> params;
     private String url = "";
     private Handler handler;
-
-    private Thread myThread;
 
     public HttpPostUtils(Map<String, String> params, String url, Handler handler) {
         this.params = params;
@@ -46,29 +42,19 @@ public class HttpPostUtils {
         this.handler = handler;
     }
 
-    public void setOnlyOnceCalled(boolean is) {
-        isOnlyOnceCalled = is;
-    }
-
     //开启线程进行网络请求
     public void start() {
-
-        if (isOnlyOnceCalled && !isFirstCalled) {
-            throw new RuntimeException("function start() of " +
-                    "com.jimbo.myapplication.utils.HttpPostUtils can be only called one time");
-        }
-        isFirstCalled = false;
-        myThread = new Thread(new Runnable() {
+        new Thread(new Runnable() {
             @Override
             public void run() {
                 startNetWork();
+                System.out.println(++i+"run number");
             }
-        });
-        myThread.start();
+        }).start();
     }
 
     public void tryAgain() {
-        myThread.run();
+        start();
     }
 
     //定义网络请求
@@ -90,7 +76,8 @@ public class HttpPostUtils {
             HttpResponse httpResponse = httpClient.execute(post);
             HttpEntity entity = httpResponse.getEntity();
             if (200 == httpResponse.getStatusLine().getStatusCode()) {
-                message.what = Config.SUCCESSTOLEADSDNU;
+                //message.what = Config.SUCCESSTOLEADSDNU;
+                message.what = Config.FAILTOLEADSDNU;
                 message.obj = EntityUtils.toString(entity);
             } else {
                 message.what = Config.FAILTOLEADSDNU;
