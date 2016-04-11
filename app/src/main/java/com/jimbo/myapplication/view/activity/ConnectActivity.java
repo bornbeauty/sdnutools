@@ -37,10 +37,6 @@ public class ConnectActivity extends AppCompatActivity implements IConnectToNetV
     private TextView tvWifiName;
     private TextView tvUserName;
 
-    private ButtonRectangle btRefresh;
-    private ButtonRectangle btRefreshWifiStatus;
-    private ButtonRectangle btLendToSDNU;
-
     private ConnectToNetPresenter connectToNetPresenter =
             new ConnectToNetPresenter(this);
 
@@ -67,9 +63,9 @@ public class ConnectActivity extends AppCompatActivity implements IConnectToNetV
         tvWifiStatus = (TextView) findViewById(R.id.wifiStatus);
         tvSDNUMessage = (TextView) findViewById(R.id.sdnuMessage);
 
-        btRefresh = (ButtonRectangle) findViewById(R.id.refresh);
-        btRefreshWifiStatus = (ButtonRectangle) findViewById(R.id.refreshWiFiStatus);
-        btLendToSDNU = (ButtonRectangle) findViewById(R.id.lendToSDNU);
+        ButtonRectangle btRefresh = (ButtonRectangle) findViewById(R.id.refresh);
+        ButtonRectangle btRefreshWifiStatus = (ButtonRectangle) findViewById(R.id.refreshWiFiStatus);
+        ButtonRectangle btLendToSDNU = (ButtonRectangle) findViewById(R.id.lendToSDNU);
 
         btLendToSDNU.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -89,6 +85,13 @@ public class ConnectActivity extends AppCompatActivity implements IConnectToNetV
                         "" : WIFIUtils.getWifiName());
                 tvUserName.setText(WIFIUtils.getWifiAccountName() == null ?
                         "" : WIFIUtils.getWifiAccountName());
+            }
+        });
+
+        btRefresh.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
             }
         });
     }
