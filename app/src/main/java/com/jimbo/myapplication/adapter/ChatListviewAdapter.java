@@ -9,7 +9,6 @@ import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 import com.jimbo.myapplication.R;
-import com.jimbo.myapplication.date.HttpResponesMessage;
 import com.jimbo.myapplication.date.ListItem;
 
 import java.text.SimpleDateFormat;
