@@ -30,7 +30,7 @@ public class ConnectToNetImp implements IConnectToNet {
 
     @Override
     public void isConnectNet(Handler mHandler) {
-        httpGetUtils = new HttpGetUtils("https://www.baidu.com", mHandler);
+        httpGetUtils = new HttpGetUtils("http://www.baidu.com", mHandler);
         httpGetUtils.start();
     }
 

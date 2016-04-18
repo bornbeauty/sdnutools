@@ -31,15 +31,16 @@ public class ConnectToNetPresenter {
     private Handler mHandler = new Handler(new Handler.Callback() {
         @Override
         public boolean handleMessage(Message msg) {
+            //connectToNetView.trying();
             if (msg.what == Config.SUCCESSTOLEADSDNU) {
                 connectToNetView.success();
             } else {
                 count++;
-                if (msg.what == Config.FAILTOLEADSDNU && count < 10) {
+                if (count < 10) {
                     connectToNetImp.tryAgain();
-                    connectToNetView.trying();
                 } else {
                     connectToNetView.failed();
+                    return true;
                 }
             }
             return true;
@@ -48,6 +49,7 @@ public class ConnectToNetPresenter {
 
     public void connect(Map<String, String> params, String url) {
         count = 0;
+        connectToNetView.trying();
         connectToNetImp.connectToNet(params, url, mHandler);
     }
 

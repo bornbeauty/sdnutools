@@ -1,6 +1,7 @@
 package com.jimbo.myapplication.view.activity;
 
 import android.content.DialogInterface;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -86,37 +87,46 @@ public class ConnectActivity extends AppCompatActivity implements IConnectToNetV
         btRefresh.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                tvWifiName.setText(WIFIUtils.getWifiName() == null ?
-                        "" : WIFIUtils.getWifiName());
-                tvUserName.setText(WIFIUtils.getWifiAccountName() == null ?
-                        "" : WIFIUtils.getWifiAccountName());
+                accountStatus();
             }
         });
+    }
+
+    private void accountStatus() {
+        tvWifiName.setText(WIFIUtils.getWifiName() == null ?
+                "" : WIFIUtils.getWifiName());
+        tvUserName.setText(WIFIUtils.getWifiAccountName() == null ?
+                "" : WIFIUtils.getWifiAccountName());
     }
 
     @Override
     public void success() {
         tvSDNUMessage.setText("连接成功~");
-        Toast.makeText(ConnectActivity.this, "success", Toast.LENGTH_SHORT).show();
+        isConnectedNet(true);
+        tvSDNUMessage.setTextColor(Color.BLUE);
     }
 
     @Override
     public void trying() {
         tvSDNUMessage.setText("连接中~");
+        tvSDNUMessage.setTextColor(Color.GREEN);
     }
 
     @Override
     public void failed() {
         tvSDNUMessage.setText("连接失败~");
-        Toast.makeText(ConnectActivity.this, "failed", Toast.LENGTH_SHORT).show();
+        isConnectedNet(false);
+        tvSDNUMessage.setTextColor(Color.RED);
     }
 
     @Override
     public void isConnectedNet(boolean is) {
         if (is) {
-            tvNetStatus.setText("网络畅通");
+            tvNetStatus.setText("网络畅通~");
+            tvNetStatus.setTextColor(Color.BLUE);
         } else {
-            tvNetStatus.setText("网络存在问题");
+            tvNetStatus.setText("网络断开~");
+            tvNetStatus.setTextColor(Color.RED);
         }
     }
 
@@ -195,6 +205,7 @@ public class ConnectActivity extends AppCompatActivity implements IConnectToNetV
                         } else {
                             WIFIUtils.savePassword("");
                         }
+                        accountStatus();
                     }
                 });
                 NPBuilder.setNegativeButton("取消", new DialogInterface.OnClickListener() {
