@@ -12,5 +12,6 @@ import java.util.Map;
  */
 public interface IConnectToNet {
     void connectToNet(Map<String, String> params, String url, Handler mHandler);
-    public void tryAgain();
+    void tryAgain();
+    void isConnectNet(Handler mHandler);
 }

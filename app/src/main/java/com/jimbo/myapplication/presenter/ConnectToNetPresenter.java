@@ -51,4 +51,22 @@ public class ConnectToNetPresenter {
         connectToNetImp.connectToNet(params, url, mHandler);
     }
 
+    public void isConnectedNet() {
+        connectToNetView.isCheckingNet();
+        connectToNetImp.isConnectNet(NetHandler);
+    }
+
+    private Handler NetHandler = new Handler(new Handler.Callback() {
+        @Override
+        public boolean handleMessage(Message msg) {
+
+            if (msg.what == 1) {
+                connectToNetView.isConnectedNet(true);
+            } else {
+                connectToNetView.isConnectedNet(false);
+            }
+
+            return true;
+        }
+    });
 }

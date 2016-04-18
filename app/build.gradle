@@ -15,6 +15,9 @@ android {
         versionName "1.1"
     }
     buildTypes {
+        debug {
+            applicationIdSuffix ".debug"
+        }
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
@@ -28,7 +31,7 @@ dependencies {
     compile 'org.jsoup:jsoup:1.8.3'
     compile 'com.github.navasmdc:MaterialDesign:1.5@aar'
     compile 'eu.the4thfloor.volley:com.android.volley:2015.05.28'
-    compile 'com.google.code.gson:gson:2.3.1'
+    compile 'com.google.code.gson:gson:2.4'
     compile 'com.pgyersdk:sdk:2.2.2'
     compile 'com.github.iammert:ProgressLayout:a2ac196500'
     //compile files('libs/*.jar')

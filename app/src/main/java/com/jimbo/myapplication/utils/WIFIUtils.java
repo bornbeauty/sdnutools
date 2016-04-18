@@ -1,8 +1,8 @@
 package com.jimbo.myapplication.utils;
 
-import android.app.Activity;
 import android.content.Context;
-import android.graphics.Color;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.net.wifi.WifiManager;
 
 import com.jimbo.myapplication.Config;
@@ -43,5 +43,28 @@ public class WIFIUtils {
 
     public static void savePassword(String password) {
         PrefUtils.putString(MyApplication.getApplication(), Config.SDNU_PASSWORD, password);
+    }
+
+    /**
+     * 检测当的网络状态
+     * @param context Context
+     * @return true 表示网络可用
+     */
+    public static boolean isNetworkAvailable(Context context) {
+        ConnectivityManager connectivity = (ConnectivityManager) context
+                .getSystemService(Context.CONNECTIVITY_SERVICE);
+        if (connectivity != null) {
+            NetworkInfo info = connectivity.getActiveNetworkInfo();
+            if (info != null && info.isConnected())
+            {
+                // 当前网络是连接的
+                if (info.getState() == NetworkInfo.State.CONNECTED)
+                {
+                    // 当前所连接的网络可用
+                    return true;
+                }
+            }
+        }
+        return false;
     }
 }

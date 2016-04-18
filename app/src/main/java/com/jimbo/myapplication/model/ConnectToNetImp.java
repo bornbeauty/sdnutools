@@ -1,9 +1,12 @@
 package com.jimbo.myapplication.model;
 
 
-import java.util.Map;
 import android.os.Handler;
+
+import com.jimbo.myapplication.utils.HttpGetUtils;
 import com.jimbo.myapplication.utils.HttpPostUtils;
+
+import java.util.Map;
 
 /**
  * description:
@@ -13,6 +16,7 @@ import com.jimbo.myapplication.utils.HttpPostUtils;
  */
 public class ConnectToNetImp implements IConnectToNet {
     private HttpPostUtils httpPostUtils = null;
+    private HttpGetUtils httpGetUtils = null;
 
     @Override
     public void connectToNet(Map<String, String> params, String url, Handler mHandler) {
@@ -22,6 +26,12 @@ public class ConnectToNetImp implements IConnectToNet {
 
     public void tryAgain() {
         httpPostUtils.tryAgain();
+    }
+
+    @Override
+    public void isConnectNet(Handler mHandler) {
+        httpGetUtils = new HttpGetUtils("https://www.baidu.com", mHandler);
+        httpGetUtils.start();
     }
 
 }

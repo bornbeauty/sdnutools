@@ -2,7 +2,6 @@ package com.jimbo.myapplication.view.activity;
 
 import android.content.DialogInterface;
 import android.os.Bundle;
-import android.os.PersistableBundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
@@ -17,7 +16,6 @@ import com.gc.materialdesign.views.ButtonRectangle;
 import com.jimbo.myapplication.Config;
 import com.jimbo.myapplication.R;
 import com.jimbo.myapplication.presenter.ConnectToNetPresenter;
-import com.jimbo.myapplication.utils.PrefUtils;
 import com.jimbo.myapplication.utils.WIFIUtils;
 import com.jimbo.myapplication.view.IConnectToNetView;
 
@@ -33,7 +31,7 @@ import java.util.Map;
 public class ConnectActivity extends AppCompatActivity implements IConnectToNetView {
 
     private TextView tvSDNUMessage;
-    private TextView tvWifiStatus;
+    private TextView tvNetStatus;
     private TextView tvWifiName;
     private TextView tvUserName;
 
@@ -60,7 +58,7 @@ public class ConnectActivity extends AppCompatActivity implements IConnectToNetV
 
         tvWifiName = (TextView) findViewById(R.id.wifiName);
         tvUserName = (TextView) findViewById(R.id.userName);
-        tvWifiStatus = (TextView) findViewById(R.id.wifiStatus);
+        tvNetStatus = (TextView) findViewById(R.id.wifiStatus);
         tvSDNUMessage = (TextView) findViewById(R.id.sdnuMessage);
 
         ButtonRectangle btRefresh = (ButtonRectangle) findViewById(R.id.refresh);
@@ -81,39 +79,50 @@ public class ConnectActivity extends AppCompatActivity implements IConnectToNetV
         btRefreshWifiStatus.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                tvWifiName.setText(WIFIUtils.getWifiName() == null ?
-                        "" : WIFIUtils.getWifiName());
-                tvUserName.setText(WIFIUtils.getWifiAccountName() == null ?
-                        "" : WIFIUtils.getWifiAccountName());
+                connectToNetPresenter.isConnectedNet();
             }
         });
 
         btRefresh.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                tvWifiName.setText(WIFIUtils.getWifiName() == null ?
+                        "" : WIFIUtils.getWifiName());
+                tvUserName.setText(WIFIUtils.getWifiAccountName() == null ?
+                        "" : WIFIUtils.getWifiAccountName());
             }
         });
     }
 
     @Override
     public void success() {
+        tvSDNUMessage.setText("连接成功~");
         Toast.makeText(ConnectActivity.this, "success", Toast.LENGTH_SHORT).show();
     }
 
     @Override
     public void trying() {
-        tvWifiStatus.setText("连接中~");
+        tvSDNUMessage.setText("连接中~");
     }
 
     @Override
     public void failed() {
+        tvSDNUMessage.setText("连接失败~");
         Toast.makeText(ConnectActivity.this, "failed", Toast.LENGTH_SHORT).show();
     }
 
     @Override
-    public void unaware(String description) {
+    public void isConnectedNet(boolean is) {
+        if (is) {
+            tvNetStatus.setText("网络畅通");
+        } else {
+            tvNetStatus.setText("网络存在问题");
+        }
+    }
 
+    @Override
+    public void isCheckingNet() {
+        tvNetStatus.setText("正在判断~");
     }
 
     private Map<String, String> getSDNU() {

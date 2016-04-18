@@ -77,7 +77,7 @@ public class HttpPostUtils {
             HttpEntity entity = httpResponse.getEntity();
             if (200 == httpResponse.getStatusLine().getStatusCode()) {
                 //message.what = Config.SUCCESSTOLEADSDNU;
-                message.what = Config.FAILTOLEADSDNU;
+                message.what = Config.SUCCESSTOLEADSDNU;
                 message.obj = EntityUtils.toString(entity);
             } else {
                 message.what = Config.FAILTOLEADSDNU;

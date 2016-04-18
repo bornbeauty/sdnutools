@@ -11,6 +11,6 @@ public interface IConnectToNetView {
     void success();
     void trying();
     void failed();
-    void unaware(String description);
-
+    void isConnectedNet(boolean is);
+    void isCheckingNet();
 }
