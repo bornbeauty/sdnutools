@@ -41,7 +41,4 @@
         android:title="@string/meau_about"
         app:showAsAction="never" />
 
-
-
-
 </menu>

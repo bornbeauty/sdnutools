@@ -23,11 +23,9 @@ import com.gc.materialdesign.views.ButtonRectangle;
 import com.jimbo.myapplication.Config;
 import com.jimbo.myapplication.R;
 import com.jimbo.myapplication.presenter.ConnectToNetPresenter;
+import com.jimbo.myapplication.utils.SDNUUtils;
 import com.jimbo.myapplication.utils.WIFIUtils;
 import com.jimbo.myapplication.view.IConnectToNetView;
-
-import java.util.HashMap;
-import java.util.Map;
 
 /**
  * description:
@@ -47,7 +45,7 @@ public class ConnectActivity extends AppCompatActivity implements IConnectToNetV
             new ConnectToNetPresenter(this);
 
     //权限申请
-    private static final int REQUESTPE_RRIMISSION_CODE = 0x001;
+    private static final int REQUEST_PERMISSION_CODE = 0x001;
 
 
     @Override
@@ -86,7 +84,7 @@ public class ConnectActivity extends AppCompatActivity implements IConnectToNetV
                     Toast.makeText(ConnectActivity.this, "请先连接SDNU", Toast.LENGTH_SHORT).show();
                     return;
                 }
-                connectToNetPresenter.connect(getSDNU(), Config.URL);
+                connectToNetPresenter.connect(SDNUUtils.getSDNU(), Config.URL);
             }
         });
 
@@ -122,7 +120,7 @@ public class ConnectActivity extends AppCompatActivity implements IConnectToNetV
                 Manifest.permission.READ_CONTACTS)
                 != PackageManager.PERMISSION_GRANTED) {
             requestPermissions(new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},
-                    REQUESTPE_RRIMISSION_CODE);
+                    REQUEST_PERMISSION_CODE);
         } else {
             connectToNetPresenter.checkUpdate();
             Toast.makeText(ConnectActivity.this, "检测更新", Toast.LENGTH_SHORT).show();
@@ -133,7 +131,7 @@ public class ConnectActivity extends AppCompatActivity implements IConnectToNetV
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        if (requestCode == REQUESTPE_RRIMISSION_CODE) {
+        if (requestCode == REQUEST_PERMISSION_CODE) {
 
             if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                 connectToNetPresenter.checkUpdate();
@@ -221,21 +219,6 @@ public class ConnectActivity extends AppCompatActivity implements IConnectToNetV
                     }
                 }).create().show();
 
-    }
-
-    private Map<String, String> getSDNU() {
-        Map<String, String> map = new HashMap<>();
-        String name = WIFIUtils.getWifiAccountName();
-        String password = WIFIUtils.getWifiAccountPassword();
-
-        if (name == null || password == null) {
-            return null;
-        }
-        map.put("id", "2000");
-        map.put("strAccount", name);
-        map.put("strPassword", password);
-        map.put("savePWD", "0");
-        return map;
     }
 
     @Override

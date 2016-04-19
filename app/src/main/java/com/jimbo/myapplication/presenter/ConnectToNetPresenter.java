@@ -94,7 +94,6 @@ public class ConnectToNetPresenter {
                 } catch (PackageManager.NameNotFoundException e) {
                     e.printStackTrace();
                 }
-                System.out.println("currentcode"+currentVersionCode+", new"+version.buildCode);
                 if (version.buildCode > currentVersionCode) {
                     connectToNetView.update(version.versionName, version.description);
                 }
