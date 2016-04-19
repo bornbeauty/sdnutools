@@ -1,11 +1,15 @@
 package com.jimbo.myapplication.presenter;
 
+import android.content.pm.PackageManager;
 import android.os.Handler;
 import android.os.Message;
 
+import com.google.gson.Gson;
 import com.jimbo.myapplication.Config;
 import com.jimbo.myapplication.model.ConnectToNetImp;
 import com.jimbo.myapplication.model.IConnectToNet;
+import com.jimbo.myapplication.model.bean.Version;
+import com.jimbo.myapplication.utils.VersionUtils;
 import com.jimbo.myapplication.view.IConnectToNetView;
 
 import java.util.Map;
@@ -55,10 +59,10 @@ public class ConnectToNetPresenter {
 
     public void isConnectedNet() {
         connectToNetView.isCheckingNet();
-        connectToNetImp.isConnectNet(NetHandler);
+        connectToNetImp.isConnectNet(netHandler);
     }
 
-    private Handler NetHandler = new Handler(new Handler.Callback() {
+    private Handler netHandler = new Handler(new Handler.Callback() {
         @Override
         public boolean handleMessage(Message msg) {
 
@@ -68,6 +72,34 @@ public class ConnectToNetPresenter {
                 connectToNetView.isConnectedNet(false);
             }
 
+            return true;
+        }
+    });
+
+    public void checkUpdate() {
+        connectToNetImp.checkUpdate(updateHandler);
+    }
+
+    Handler updateHandler = new Handler(new Handler.Callback() {
+        @Override
+        public boolean handleMessage(Message msg) {
+            
+            if (msg.what == 1) {
+                String json = (String) msg.obj;
+                Gson gson = new Gson();
+                Version version = gson.fromJson(json, Version.class);
+                int currentVersionCode = 0;
+                try {
+                    currentVersionCode = new VersionUtils().getAppVersionCode();
+                } catch (PackageManager.NameNotFoundException e) {
+                    e.printStackTrace();
+                }
+                System.out.println("currentcode"+currentVersionCode+", new"+version.buildCode);
+                if (version.buildCode > currentVersionCode) {
+                    connectToNetView.update(version.versionName, version.description);
+                }
+            }
+            
             return true;
         }
     });

@@ -16,11 +16,12 @@ import java.util.Map;
  */
 public class ConnectToNetImp implements IConnectToNet {
     private HttpPostUtils httpPostUtils = null;
-    private HttpGetUtils httpGetUtils = null;
 
     @Override
     public void connectToNet(Map<String, String> params, String url, Handler mHandler) {
-        httpPostUtils = new HttpPostUtils(params, url, mHandler);
+        if (null == httpPostUtils ) {
+            httpPostUtils = new HttpPostUtils(params, url, mHandler);
+        }
         httpPostUtils.start();
     }
 
@@ -30,8 +31,13 @@ public class ConnectToNetImp implements IConnectToNet {
 
     @Override
     public void isConnectNet(Handler mHandler) {
-        httpGetUtils = new HttpGetUtils("http://www.baidu.com", mHandler);
-        httpGetUtils.start();
+        new HttpGetUtils("http://www.baidu.com", mHandler).start();
+    }
+
+    @Override
+    public void checkUpdate(Handler mHandler) {
+        new HttpGetUtils("http://7xt50a.com2.z0.glb.clouddn.com/upsdnu.json",
+                mHandler).start();
     }
 
 }

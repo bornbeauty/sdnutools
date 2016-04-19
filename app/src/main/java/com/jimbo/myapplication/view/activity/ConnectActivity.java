@@ -1,8 +1,14 @@
 package com.jimbo.myapplication.view.activity;
 
+import android.Manifest;
+import android.annotation.TargetApi;
 import android.content.DialogInterface;
+import android.content.pm.PackageManager;
 import android.graphics.Color;
+import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
@@ -31,6 +37,7 @@ import java.util.Map;
  */
 public class ConnectActivity extends AppCompatActivity implements IConnectToNetView {
 
+    //信息提示
     private TextView tvSDNUMessage;
     private TextView tvNetStatus;
     private TextView tvWifiName;
@@ -39,10 +46,15 @@ public class ConnectActivity extends AppCompatActivity implements IConnectToNetV
     private ConnectToNetPresenter connectToNetPresenter =
             new ConnectToNetPresenter(this);
 
+    //权限申请
+    private static final int REQUESTPE_RRIMISSION_CODE = 0x001;
+
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        requestMyApplicationPermission();
         initView();
         initData();
     }
@@ -66,6 +78,7 @@ public class ConnectActivity extends AppCompatActivity implements IConnectToNetV
         ButtonRectangle btRefreshWifiStatus = (ButtonRectangle) findViewById(R.id.refreshWiFiStatus);
         ButtonRectangle btLendToSDNU = (ButtonRectangle) findViewById(R.id.lendToSDNU);
 
+        assert btLendToSDNU != null;
         btLendToSDNU.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -77,6 +90,7 @@ public class ConnectActivity extends AppCompatActivity implements IConnectToNetV
             }
         });
 
+        assert btRefreshWifiStatus != null;
         btRefreshWifiStatus.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -84,12 +98,62 @@ public class ConnectActivity extends AppCompatActivity implements IConnectToNetV
             }
         });
 
+        assert btRefresh != null;
         btRefresh.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 accountStatus();
             }
         });
+    }
+
+    /*
+        int checkSelfPermission(String permission) 用来检测应用是否已经具有权限
+        void requestPermissions(String[] permissions, int requestCode) 进行请求单个或多个权限
+        void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults)
+    */
+    @TargetApi(Build.VERSION_CODES.M)
+    void requestMyApplicationPermission() {
+        if (Build.VERSION.SDK_INT < 23) {
+            connectToNetPresenter.checkUpdate();
+            return;
+        }
+        if (ContextCompat.checkSelfPermission(ConnectActivity.this,
+                Manifest.permission.READ_CONTACTS)
+                != PackageManager.PERMISSION_GRANTED) {
+            requestPermissions(new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},
+                    REQUESTPE_RRIMISSION_CODE);
+        } else {
+            connectToNetPresenter.checkUpdate();
+            Toast.makeText(ConnectActivity.this, "检测更新", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if (requestCode == REQUESTPE_RRIMISSION_CODE) {
+
+            if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                connectToNetPresenter.checkUpdate();
+                Toast.makeText(ConnectActivity.this, "检测更新", Toast.LENGTH_SHORT).show();
+            } else {
+
+                Toast.makeText(ConnectActivity.this, "拒绝授权", Toast.LENGTH_SHORT).show();
+                new AlertDialog.Builder(this).setTitle("警告")
+                        .setMessage("您已经拒绝给应用读取SD的权限，应用将无法检测自动升级。" +
+                                "您可以在设置中重新给应用添加权限或者手动去" +
+                                "https://www.pgyer.com/upsdun下载最新版")
+                        .setPositiveButton("知道啦~", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                dialog.dismiss();
+                            }
+                        })
+                        .create().show();
+            }
+        }
     }
 
     private void accountStatus() {
@@ -133,6 +197,30 @@ public class ConnectActivity extends AppCompatActivity implements IConnectToNetV
     @Override
     public void isCheckingNet() {
         tvNetStatus.setText("正在判断~");
+    }
+
+    @Override
+    public void update(String versionName, String versionDescription) {
+        String[] descriptions = versionDescription.split("-");
+        String message = "最新版:"+versionName;
+        for (String d:descriptions) {
+            message += ("\n" + d);
+        }
+        new AlertDialog.Builder(this).setTitle("发现新版本")
+                .setMessage(message)
+                .setPositiveButton("更新~", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+
+                    }
+                })
+                .setNegativeButton("忽略~", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                }).create().show();
+
     }
 
     private Map<String, String> getSDNU() {
@@ -217,9 +305,13 @@ public class ConnectActivity extends AppCompatActivity implements IConnectToNetV
                 NPBuilder.create().show();
                 break;
 
+            case R.id.checkNew:
+                requestMyApplicationPermission();
+                break;
+
             default:
         }
-
         return true;
     }
+
 }

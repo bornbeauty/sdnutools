@@ -2,7 +2,6 @@ package com.jimbo.myapplication.widget;
 
 import android.app.Notification;
 import android.app.NotificationManager;
-import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -14,7 +13,6 @@ import com.jimbo.myapplication.Config;
 import com.jimbo.myapplication.R;
 import com.jimbo.myapplication.utils.HttpPostUtils;
 import com.jimbo.myapplication.utils.PrefUtils;
-import com.jimbo.myapplication.view.activity.MainActivity;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
@@ -60,8 +58,8 @@ public class WiFiReceiver extends BroadcastReceiver {
                     .getNotification();
             notification.icon = R.mipmap.sdnu;
 
-            PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, new Intent(context, MainActivity.class),
-                    PendingIntent.FLAG_CANCEL_CURRENT);
+//            PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, new Intent(context, MainActivity.class),
+//                    PendingIntent.FLAG_CANCEL_CURRENT);
 
 //            notification.setLatestEventInfo(context, "UpSDNU", "成功连接到sdnu", pendingIntent);
 

@@ -14,4 +14,6 @@ public interface IConnectToNet {
     void connectToNet(Map<String, String> params, String url, Handler mHandler);
     void tryAgain();
     void isConnectNet(Handler mHandler);
+
+    void checkUpdate(Handler mHandler);
 }

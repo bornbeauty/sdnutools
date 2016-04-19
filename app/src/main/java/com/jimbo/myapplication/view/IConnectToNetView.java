@@ -13,4 +13,6 @@ public interface IConnectToNetView {
     void failed();
     void isConnectedNet(boolean is);
     void isCheckingNet();
+
+    void update(String versionName, String versionDescription);
 }

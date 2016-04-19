@@ -3,7 +3,9 @@ package com.jimbo.myapplication.utils;
 import android.os.Handler;
 import android.os.Message;
 
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
@@ -34,6 +36,7 @@ public class HttpGetUtils {
 
     private void startNetWork() {
         Message message = Message.obtain();
+        BufferedReader in = null;
         try {
             URL mUrl = new URL(this.url);
             HttpURLConnection connection = (HttpURLConnection) mUrl.openConnection();
@@ -45,12 +48,25 @@ public class HttpGetUtils {
             } else {
                 message.what = 0;
             }
-            message.obj = connection.getResponseMessage();
+
+            in = new BufferedReader(
+                    new InputStreamReader(connection.getInputStream()));
+            String line;
+            StringBuilder result = new StringBuilder();
+            while ((line = in.readLine()) != null) {
+                result.append(line);
+            }
+            String re = result.toString();
+            if (re.contains("192.168.255.195:8080")) {
+                message.what = 0;
+            }
+            message.obj = re;
         } catch (IOException e) {
             e.printStackTrace();
             message.what = 0;
             message.obj = "IOException occurred in" + getClass();
         }
-            mHandler.sendMessage(message);
+
+        mHandler.sendMessage(message);
     }
 }

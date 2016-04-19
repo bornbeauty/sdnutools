@@ -2,8 +2,6 @@ package com.jimbo.myapplication;
 
 import android.app.Application;
 
-import com.pgyersdk.crash.PgyCrashManager;
-
 /**
  * description:
  *
@@ -25,6 +23,5 @@ public class MyApplication extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
-        PgyCrashManager.register(this);
     }
 }

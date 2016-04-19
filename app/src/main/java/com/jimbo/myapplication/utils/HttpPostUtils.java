@@ -63,7 +63,7 @@ public class HttpPostUtils {
         Message message = new Message();
         try {
             HttpClient httpClient = new DefaultHttpClient();
-            httpClient.getParams().setParameter(CoreConnectionPNames.CONNECTION_TIMEOUT, 20000);
+            httpClient.getParams().setParameter(CoreConnectionPNames.CONNECTION_TIMEOUT, 5000);
             HttpPost post = new HttpPost(url);
             List<NameValuePair> list = null;
             if (null != params) {
