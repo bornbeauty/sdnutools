@@ -14,7 +14,7 @@
         android:layout_margin="0dp"
         android:layout_height="56dp" />
 
-    <com.jimbo.myapplication.webview.ProgressWebView
+    <com.jimbo.myapplication.view.view.ProgressWebView
         android:id="@+id/webview"
         android:padding="0dp"
         android:layout_margin="0dp"

@@ -1,4 +1,4 @@
-package com.jimbo.myapplication.webview;
+package com.jimbo.myapplication.view.view;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
