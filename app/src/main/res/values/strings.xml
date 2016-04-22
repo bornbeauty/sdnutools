@@ -39,6 +39,7 @@
     <string name="link_failed_text">sdnu可能很忙 现在你不能Up他</string>
     <string name="this_grade">本学期成绩</string>
     <string name="help_page">使用教程</string>
+    <string name="downing">downloading form upsdnu</string>
 
 
 </resources>
