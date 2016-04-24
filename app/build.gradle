@@ -32,9 +32,6 @@ dependencies {
     compile 'com.github.navasmdc:MaterialDesign:1.5@aar'
     compile 'eu.the4thfloor.volley:com.android.volley:2015.05.28'
     compile 'com.google.code.gson:gson:2.4'
-<<<<<<< HEAD
     compile 'com.pgyersdk:sdk:2.2.2'
-=======
->>>>>>> MVP_sdnutools
     compile 'com.github.iammert:ProgressLayout:a2ac196500'
 }
