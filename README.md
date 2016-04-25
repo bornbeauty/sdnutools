@@ -1,11 +1,6 @@
 
 >upsdnu使用说明
 
-<<<<<<< HEAD
-最新代码请查看：MVP_sdnutools分支
-
-=======
->>>>>>> MVP_sdnutools
 任何意见以及建议都可以反馈 在博客下面留言即可
 
 # 1. 使用说明
@@ -35,6 +30,7 @@
 ![截图3](http://7xjtan.com1.z0.glb.clouddn.com/screenshot1_meitu_2.jpg)
 ![截图1](http://7xjtan.com1.z0.glb.clouddn.com/screenshot2_meitu_3.jpg)
 
+<img src="http://7xjtan.com1.z0.glb.clouddn.com/screenshot.jpg"><>
 
 
 
