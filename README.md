@@ -26,9 +26,9 @@
 
 # 3. 软件部分截图
 
-<img src="http://7xjtan.com1.z0.glb.clouddn.com/screenshot.jpg" width="360" height="540"></img>
-<img src="http://7xjtan.com1.z0.glb.clouddn.com/screenshot1_meitu_2.jpg" width="360" height="540"></img>
-<img src="http://7xjtan.com1.z0.glb.clouddn.com/screenshot2_meitu_3.jpg" width="360" height="540"></img>
+<img src="http://7xjtan.com1.z0.glb.clouddn.com/screenshot.jpg" width="360" height="640"></img>
+<img src="http://7xjtan.com1.z0.glb.clouddn.com/screenshot1_meitu_2.jpg" width="360" height="640"></img>
+<img src="http://7xjtan.com1.z0.glb.clouddn.com/screenshot2_meitu_3.jpg" width="360" height="640"></img>
 
 
 
