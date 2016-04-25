@@ -30,7 +30,7 @@
 ![截图3](http://7xjtan.com1.z0.glb.clouddn.com/screenshot1_meitu_2.jpg)
 ![截图1](http://7xjtan.com1.z0.glb.clouddn.com/screenshot2_meitu_3.jpg)
 
-<img src="http://7xjtan.com1.z0.glb.clouddn.com/screenshot.jpg"></img>
+<img src="http://7xjtan.com1.z0.glb.clouddn.com/screenshot.jpg" width="360" height="540"></img>
 
 
 
