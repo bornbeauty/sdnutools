@@ -1,41 +1,22 @@
 package com.jimbo.myapplication.utils;
 
 import android.os.Handler;
-<<<<<<< HEAD
-=======
 import android.os.Message;
-
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
->>>>>>> MVP_sdnutools
+
 
 /**
  * description:
  *
  * @author jimbo zhongjinbao1994@gmail.com
-<<<<<<< HEAD
+
  * @since 2016/4/11 13:13
  */
-public class HttpGetUtils {
 
-    private String url;
-    private Handler handler;
-
-    public HttpGetUtils(String url, Handler handler) {
-        this.url = url;
-        this.handler = handler;
-    }
-
-    public void get() {
-
-    }
-
-=======
- * @since 2016/4/18 20:00
- */
 public class HttpGetUtils {
 
     private String url = "http://www.baidu.com";
@@ -90,5 +71,5 @@ public class HttpGetUtils {
 
         mHandler.sendMessage(message);
     }
->>>>>>> MVP_sdnutools
+
 }

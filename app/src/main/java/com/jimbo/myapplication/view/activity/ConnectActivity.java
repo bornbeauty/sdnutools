@@ -113,7 +113,7 @@ public class ConnectActivity extends AppCompatActivity implements IConnectToNetV
     @TargetApi(Build.VERSION_CODES.M)
     void requestMyApplicationPermission() {
         if (Build.VERSION.SDK_INT < 23) {
-            connectToNetPresenter.checkUpdate();
+            //connectToNetPresenter.checkUpdate();
             return;
         }
         if (ContextCompat.checkSelfPermission(ConnectActivity.this,
@@ -122,8 +122,8 @@ public class ConnectActivity extends AppCompatActivity implements IConnectToNetV
             requestPermissions(new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},
                     REQUEST_PERMISSION_CODE);
         } else {
-            connectToNetPresenter.checkUpdate();
-            Toast.makeText(ConnectActivity.this, "检测更新", Toast.LENGTH_SHORT).show();
+            //connectToNetPresenter.checkUpdate();
+            //Toast.makeText(ConnectActivity.this, "检测更新", Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -134,11 +134,11 @@ public class ConnectActivity extends AppCompatActivity implements IConnectToNetV
         if (requestCode == REQUEST_PERMISSION_CODE) {
 
             if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                connectToNetPresenter.checkUpdate();
-                Toast.makeText(ConnectActivity.this, "检测更新", Toast.LENGTH_SHORT).show();
+                //connectToNetPresenter.checkUpdate();
+                //Toast.makeText(ConnectActivity.this, "检测更新", Toast.LENGTH_SHORT).show();
             } else {
 
-                Toast.makeText(ConnectActivity.this, "拒绝授权", Toast.LENGTH_SHORT).show();
+                //Toast.makeText(ConnectActivity.this, "拒绝授权", Toast.LENGTH_SHORT).show();
                 new AlertDialog.Builder(this).setTitle("警告")
                         .setMessage("您已经拒绝给应用读取SD的权限，应用将无法检测自动升级。" +
                                 "您可以在设置中重新给应用添加权限或者手动去" +
@@ -288,9 +288,9 @@ public class ConnectActivity extends AppCompatActivity implements IConnectToNetV
                 NPBuilder.create().show();
                 break;
 
-            case R.id.checkNew:
-                requestMyApplicationPermission();
-                break;
+//            case R.id.checkNew:
+//                requestMyApplicationPermission();
+//                break;
 
             default:
         }

@@ -16,7 +16,7 @@
     <application
         android:allowBackup="true"
         android:name=".MyApplication"
-        android:icon="@mipmap/sdnu"
+        android:icon="@mipmap/app"
         android:fullBackupContent="false"
         android:label="@string/app_name"
         android:theme="@style/AppTheme">
