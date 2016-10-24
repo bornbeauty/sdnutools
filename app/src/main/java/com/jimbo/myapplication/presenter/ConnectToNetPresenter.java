@@ -1,5 +1,6 @@
 package com.jimbo.myapplication.presenter;
 
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.os.Handler;
 import android.os.Message;
@@ -12,7 +13,11 @@ import com.jimbo.myapplication.model.bean.Version;
 import com.jimbo.myapplication.utils.VersionUtils;
 import com.jimbo.myapplication.view.IConnectToNetView;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+
 import java.util.Map;
+import java.util.Stack;
 
 /**
  * description:
@@ -25,7 +30,11 @@ public class ConnectToNetPresenter {
     private IConnectToNet connectToNetImp = new ConnectToNetImp();
     private IConnectToNetView connectToNetView;
 
+    private Stack<String> urls;
+    private Map<String, String> params;
+
     private int count = 0;
+    private boolean hasTrying = false;
 
 
     public ConnectToNetPresenter(IConnectToNetView connectToNetView) {
@@ -37,13 +46,39 @@ public class ConnectToNetPresenter {
         public boolean handleMessage(Message msg) {
             //connectToNetView.trying();
             if (msg.what == Config.SUCCESSTOLEADSDNU) {
-                connectToNetView.success();
+                String result = (String) msg.obj;
+//                System.out.print(result);
+                if (result.contains("has been sent")){
+                    hasTrying = false;
+                    connectToNetView.success();
+                } else if (result.contains("失败")){
+                    if (urls != null && urls.size() != 0){
+//                        System.out.print("urlss" + urls.size() + urls.peek());
+                        String s = urls.pop();
+                        System.out.println("try"+s.substring(0,s.length()));
+                        connect(params,s);
+                        return true;
+                    }
+                    String errorMessage = result.substring(result.indexOf("失败(")+3);
+                    hasTrying = false;
+                    connectToNetView.failed(errorMessage.substring(0,errorMessage.indexOf(")")));
+                }else if (result.contains("成功")){
+                    hasTrying = false;
+                    connectToNetView.success();
+                }
             } else {
                 count++;
                 if (count < 10) {
                     connectToNetImp.tryAgain();
+                    System.out.print("count=="+count);
                 } else {
-                    connectToNetView.failed();
+//                    if (urls != null && urls.size() != 0){
+//                        count = 0;
+//                        connect(params,urls.pop());
+//                    }
+                    hasTrying = false;
+
+                    connectToNetView.failed("登陆超时");
                     return true;
                 }
             }
@@ -51,9 +86,22 @@ public class ConnectToNetPresenter {
         }
     });
 
+    private void saveData(JSONObject jsonObject){
+    }
+
+    public void connect(Map<String, String> params, Stack<String> urls) {
+        this.urls = urls;
+        this.params = params;
+        connect(params,urls.pop());
+    }
     public void connect(Map<String, String> params, String url) {
         count = 0;
-        connectToNetView.trying();
+        this.params = params;
+        if (!hasTrying){
+            connectToNetView.trying();
+            hasTrying = true;
+
+        }
         connectToNetImp.connectToNet(params, url, mHandler);
     }
 

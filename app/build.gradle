@@ -34,4 +34,7 @@ dependencies {
     compile 'com.google.code.gson:gson:2.4'
     compile 'com.pgyersdk:sdk:2.2.2'
     compile 'com.github.iammert:ProgressLayout:a2ac196500'
+    compile 'com.github.markushi:circlebutton:1.1'
+    compile 'com.skyfishjy.ripplebackground:library:1.0.1'
+    compile files('libs/sdnuapi_1.1.jar')
 }

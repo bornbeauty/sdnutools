@@ -72,7 +72,7 @@ public class ConnectService extends Service implements IConnectToNetView {
     }
 
     @Override
-    public void failed() {
+    public void failed(String s) {
         builder.setContentText("连接失败~")
                 .setWhen(System.currentTimeMillis());
 

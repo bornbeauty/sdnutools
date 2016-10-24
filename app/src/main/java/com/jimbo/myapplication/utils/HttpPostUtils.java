@@ -2,6 +2,7 @@ package com.jimbo.myapplication.utils;
 
 import android.os.Handler;
 import android.os.Message;
+import android.util.Log;
 
 import com.jimbo.myapplication.Config;
 
@@ -41,7 +42,9 @@ public class HttpPostUtils {
         this.url = url;
         this.handler = handler;
     }
-
+    public String getUrl (){
+        return url;
+    }
     //开启线程进行网络请求
     public void start() {
         new Thread(new Runnable() {
@@ -65,6 +68,7 @@ public class HttpPostUtils {
             HttpClient httpClient = new DefaultHttpClient();
             httpClient.getParams().setParameter(CoreConnectionPNames.CONNECTION_TIMEOUT, 5000);
             HttpPost post = new HttpPost(url);
+            Log.d("try to post:",url);
             List<NameValuePair> list = null;
             if (null != params) {
                 list = new ArrayList<>();
@@ -79,8 +83,10 @@ public class HttpPostUtils {
                 //message.what = Config.SUCCESSTOLEADSDNU;
                 message.what = Config.SUCCESSTOLEADSDNU;
                 message.obj = EntityUtils.toString(entity);
+
             } else {
                 message.what = Config.FAILTOLEADSDNU;
+                message.obj = EntityUtils.toString(entity);
             }
         } catch (IOException e) {
             e.printStackTrace();

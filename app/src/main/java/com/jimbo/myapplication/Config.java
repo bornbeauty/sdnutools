@@ -11,6 +11,7 @@ public class Config {
     public static final String SDNU_USERNAME = "SDNU_USERNAME";
     public static final String SDNU_PASSWORD = "SDNU_PASSWORD";
     public static final String URL = "http://192.168.255.195:8080/Control";
+    public static final String URL_OLD = "http://192.168.255.251:8080/Control";
 
     public static final int SUCCESSTOLEADSDNU = 1;
     public static final int FAILTOLEADSDNU = 0;

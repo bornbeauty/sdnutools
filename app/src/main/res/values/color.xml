@@ -10,5 +10,10 @@
     <color name="ContentLayoutNormal">@color/Background</color>
     <color name="ContentLayoutRefreshing">#339966</color>
     <color name="ContentLayoutFailed">@android:color/holo_red_dark</color>
+    <color name="CircleButton">#0099CC</color>
+    <color name="RippConnecting">#0099CC</color>
+    <color name="RippSuccess">#00FF90</color>
+    <color name="RippFail">#FD5442</color>
+
 
 </resources>

@@ -9,6 +9,7 @@
     <string name="meau_chat">与"我"聊聊</string>
     <string name="meau_calc_grade">计算绩点</string>
     <string name="meau_about">关于</string>
+    <string name="meau_statement">用户协议</string>
     <string name="meau_check_new">检测更新</string>
 
     <string name="update_title">更新说明</string>
@@ -20,7 +21,8 @@
     <string name="done">确定</string>
     <string name="cancel">取消</string>
 
-    <string name="description_about">该APP为了让同学们更好更方便的使用SDNU网络.保证不会收集同学们的账号,请放心.有任何问题请联系QQ：965735056.</string>
+    <string name="description_about">本软件用于连接山东师范大学校园网，可实现校园网一键连接、跨地点后台自动登陆等功能，以改善校园网连接慢、连接不上等问题。有任何问题请联系QQ：965735056.</string>
+    <string name="description_statement">在您使用本应用时，我们会将您的sdnu连接以及故障信息上传，以帮助信息处改善校园网质量。\n在此我们保证您的信息不会因此丢失、泄露。\n您确认，在您成为我们的用户之前已充分阅读、理解并接受本协议的全部内容，一旦您使用本服务，即表示您同意遵循本协议之所有约定。</string>
 
     <string name="login_jwc">登入教务处</string>
     <string name="null_description">输入不能为空!</string>

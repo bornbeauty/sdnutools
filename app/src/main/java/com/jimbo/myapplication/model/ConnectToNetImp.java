@@ -19,7 +19,7 @@ public class ConnectToNetImp implements IConnectToNet {
 
     @Override
     public void connectToNet(Map<String, String> params, String url, Handler mHandler) {
-        if (null == httpPostUtils ) {
+        if (null == httpPostUtils || httpPostUtils.getUrl() != url) {
             httpPostUtils = new HttpPostUtils(params, url, mHandler);
         }
         httpPostUtils.start();

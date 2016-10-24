@@ -10,7 +10,7 @@ public interface IConnectToNetView {
 
     void success();
     void trying();
-    void failed();
+    void failed(String message);
     void isConnectedNet(boolean is);
     void isCheckingNet();
 

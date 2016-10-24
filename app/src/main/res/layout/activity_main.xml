@@ -1,110 +1,262 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     android:paddingBottom="@dimen/activity_vertical_margin"
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin" >
+    android:paddingTop="@dimen/activity_vertical_margin">
 
-    <LinearLayout
+    <at.markushi.ui.CircleButton
+        android:id="@+id/circleButton"
+        android:layout_width="192dp"
+        android:layout_height="192dp"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        app:cb_color="@color/CircleButton"
+        app:cb_pressedRingWidth="8dip" />
+
+    <com.skyfishjy.library.RippleBackground
+        android:id="@+id/rippleBackground"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:paddingTop="20dp">
+        android:layout_height="300dp"
+        app:rb_color="@color/CircleButton"
+        app:rb_duration="3000"
+        app:rb_radius="32dp"
+        app:rb_rippleAmount="2"
+        app:rb_scale="4">
 
+        <at.markushi.ui.CircleButton
+            android:id="@+id/centerImage"
+            android:layout_width="64dp"
+            android:layout_height="64dp"
+            android:layout_centerInParent="true"
+            android:visibility="invisible"
+            android:src="@mipmap/wifi_icon"
+            app:cb_color="@color/CircleButton" />
         <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="当前WIFI名称:"
-            android:textSize="20sp" />
-
-        <TextView
-            android:id="@+id/wifiName"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="20sp" />
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:paddingTop="30dp">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="sdnu账号名称:"
-            android:textSize="20sp" />
-
-        <TextView
-            android:text="未知"
-            android:id="@+id/userName"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="20sp" />
-    </LinearLayout>
-
-    <com.gc.materialdesign.views.ButtonRectangle
-        android:id="@+id/refresh"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:background="#1E88E5"
-        android:text="刷新WIFI连接状态" />
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:paddingTop="20dp">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="当前网络状态:"
-            android:textSize="20sp" />
-
-        <TextView
-            android:text="未知"
-            android:id="@+id/wifiStatus"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="20sp" />
-    </LinearLayout>
-
-    <com.gc.materialdesign.views.ButtonRectangle
-        android:id="@+id/refreshWiFiStatus"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:background="#1E88E5"
-        android:text="刷新网络连接状态" />
-
-    <LinearLayout
-        android:paddingTop="20dp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
-
-        <TextView
-            android:textSize="20sp"
-            android:text="SDNU连接状态:"
+            android:id="@+id/retryHint"
+            android:visibility="invisible"
+            android:alpha="0.6"
+            android:text="点击上方按钮重试"
+            android:layout_below="@id/centerImage"
+            android:layout_centerHorizontal="true"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
+    </com.skyfishjy.library.RippleBackground>
 
+
+<TextView
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_centerHorizontal="true"
+    android:textSize="20sp"
+    android:textColor="#fff"
+    android:text="轻触连接wifi"
+    android:id="@+id/mainTip"
+    android:layout_centerVertical="true"/>
+    <RelativeLayout
+        android:layout_below="@+id/rippleBackground"
+        android:id="@+id/wifiStateLayout"
+        android:visibility="invisible"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
         <TextView
-            android:text="未知"
-            android:id="@+id/sdnuMessage"
+            android:id="@+id/wifiState"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="20sp" />
-    </LinearLayout>
-
-    <com.gc.materialdesign.views.ButtonRectangle
-        android:id="@+id/lendToSDNU"
+            android:textSize="16sp"
+            android:text="检测wifi连接状况："/>
+        <ImageView
+            android:layout_toEndOf="@+id/wifiState"
+            android:id="@+id/wifiStateImg"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@mipmap/hint_success"
+            android:layout_toRightOf="@+id/wifiState"
+            android:layout_alignBottom="@+id/wifiState" />
+    </RelativeLayout>
+    <RelativeLayout
+        android:layout_below="@+id/wifiStateLayout"
+        android:id="@+id/passwordStateLayout"
+        android:visibility="invisible"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:background="#1E88E5"
-        android:text="连接到SDNU" />
+        android:layout_height="wrap_content">
+        <TextView
+            android:id="@+id/passwordState"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="16sp"
+            android:text="检测用户名与密码："/>
+        <ImageView
+            android:layout_toEndOf="@+id/passwordState"
+            android:id="@+id/passwordStateImg"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@mipmap/hint_success"
+            android:layout_toRightOf="@+id/passwordState"
+            android:layout_alignBottom="@+id/passwordState" />
+    </RelativeLayout>
+    <RelativeLayout
+        android:layout_below="@+id/passwordStateLayout"
+        android:id="@+id/connectStateLayout"
+        android:visibility="invisible"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+        <TextView
+            android:id="@+id/connectState"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="16sp"
+            android:text="登陆中..."/>
+        <!--<com.gc.materialdesign.views.ProgressBarCircularIndeterminate-->
+            <!--android:id="@+id/connectStateProgressBar"-->
+            <!--android:layout_toEndOf="@id/connectState"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_alignBottom="@+id/connectState"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:background="@color/CircleButton"-->
+            <!--android:layout_toRightOf="@id/connectState" />-->
+        <ImageView
+            android:id="@+id/connectStateImg"
+            android:layout_toEndOf="@+id/connectState"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@mipmap/hint_success"
+            android:layout_toRightOf="@+id/connectState"
+            android:layout_alignBottom="@+id/connectState" />
+    </RelativeLayout>
 
-</LinearLayout>
+
+    <RelativeLayout
+        android:layout_below="@+id/connectStateLayout"
+        android:id="@+id/netStateLayout"
+        android:visibility="invisible"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+        <TextView
+            android:id="@+id/netState"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="16sp"
+            android:text="检测网络状态..."/>
+        <ImageView
+            android:layout_toEndOf="@+id/netState"
+            android:id="@+id/netStateImg"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@mipmap/hint_success"
+            android:layout_toRightOf="@+id/netState"
+            android:layout_alignBottom="@+id/netState" />
+    </RelativeLayout>
+
+    <!--===================================分割线=========================================-->
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:visibility="gone">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:paddingTop="20dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="当前WIFI名称:"
+                android:textSize="20sp" />
+
+            <TextView
+                android:id="@+id/wifiName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="20sp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:paddingTop="30dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="sdnu账号名称:"
+                android:textSize="20sp" />
+
+            <TextView
+                android:id="@+id/userName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="未知"
+                android:textSize="20sp" />
+        </LinearLayout>
+
+        <com.gc.materialdesign.views.ButtonRectangle
+            android:id="@+id/refresh"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="#1E88E5"
+            android:text="刷新WIFI连接状态" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingTop="20dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="当前网络状态:"
+                android:textSize="20sp" />
+
+            <TextView
+                android:id="@+id/wifiStatus"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="未知"
+                android:textSize="20sp" />
+        </LinearLayout>
+
+        <com.gc.materialdesign.views.ButtonRectangle
+            android:id="@+id/refreshWiFiStatus"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="#1E88E5"
+            android:text="刷新网络连接状态" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:paddingTop="20dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="SDNU连接状态:"
+                android:textSize="20sp" />
+
+            <TextView
+                android:id="@+id/sdnuMessage"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="未知"
+                android:textSize="20sp" />
+        </LinearLayout>
+
+        <com.gc.materialdesign.views.ButtonRectangle
+            android:id="@+id/lendToSDNU"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="#1E88E5"
+            android:text="连接到SDNU" />
+
+    </LinearLayout>
+</RelativeLayout>
